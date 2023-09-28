@@ -206,8 +206,8 @@ class Trainer:
 
         return [np.array(np.concatenate(v)).mean(axis=0) for v in self.val_metrics_dict.values()]
 
-    def test(self,test_loader):
-        self._load_best_model()
+    def test(self, test_loader, map_location='cpu'):
+        self._load_best_model(map_location)
         self.model.eval()
         y_pred_curve, y_curve,s_pred_curve,status_curve = [], [], [], []
 
@@ -318,9 +318,9 @@ class Trainer:
         print('Saving best model...')
         torch.save(self.model.state_dict(), self.export_root.joinpath('best_acc_model.pth'))
 
-    def _load_best_model(self):
+    def _load_best_model(self, map_location):
         try:
-            self.model.load_state_dict(torch.load(self.export_root.joinpath('best_acc_model.pth')))
+            self.model.load_state_dict(torch.load(self.export_root.joinpath('best_acc_model.pth'), map_location=map_location))
             self.model.to(self.device)
         except:
             print('Failed to load best model, continue testing with current model...')
