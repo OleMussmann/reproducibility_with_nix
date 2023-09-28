@@ -141,8 +141,8 @@ class Trainer:
             self.training_loss.append(average_loss)
             tqdm_dataloader.set_description('Epoch {}, loss {:.2f}'.format(epoch, average_loss))
 
-            writer.add_scalar("pretrain/batch/avg_loss", average_loss, epoch)
-            writer.flush()
+        writer.add_scalar("pretrain/batch/avg_loss", average_loss, epoch)
+        writer.flush()
 
 
         if self.args.enable_lr_schedule:
@@ -167,8 +167,8 @@ class Trainer:
             self.training_loss.append(average_loss)
             tqdm_dataloader.set_description('Epoch {}, loss {:.2f}'.format(epoch, average_loss))
 
-            writer.add_scalar("train/batch/avg_loss", average_loss, epoch)
-            writer.flush()
+        writer.add_scalar("train/batch/avg_loss", average_loss, epoch)
+        writer.flush()
 
 
         if self.args.enable_lr_schedule:
