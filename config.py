@@ -15,12 +15,12 @@ def get_args():
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
     parser.add_argument('--dataset_code',       type = str,   default = 'refit', choices=['redd_lf', 'uk_dale','refit'])
-    parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
+    parser.add_argument('--house_indicies',     nargs = '+',  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle','toaster'
     #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','TV'
-    parser.add_argument('--appliance_names',    type = list,  default = ['Washing_Machine'])
+    parser.add_argument('--appliance_names',    nargs = '+',  default = ['Washing_Machine'])
 
     parser.add_argument('--sampling',           type = str,   default = '6s')
     parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax','none'])
