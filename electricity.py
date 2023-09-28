@@ -1,5 +1,6 @@
 import torch
 torch.set_default_tensor_type(torch.DoubleTensor)
+from torch.utils.tensorboard import SummaryWriter
 
 # import argparse
 from   config            import *
@@ -18,6 +19,8 @@ if __name__ == "__main__":
 
     args = get_args()
     setup_seed(args.seed)
+
+    writer = SummaryWriter()
 
     if args.dataset_code == 'redd_lf':
         args.house_indicies = [2, 3, 4, 5, 6]
@@ -42,7 +45,10 @@ if __name__ == "__main__":
             print('Successfully loaded previous model, continue training...')
         except FileNotFoundError:
             print('Failed to load old model, continue training new model...')
-        trainer.train()
+        trainer.train(writer)
+
+    writer.flush()
+    writer.close()
 
     end_time = time()
 

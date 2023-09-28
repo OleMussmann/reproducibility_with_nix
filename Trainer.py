@@ -89,12 +89,12 @@ class Trainer:
         self.y_pred_curve, self.y_curve, self.s_pred_curve, self.status_curve = [], [], [], []
 
 
-    def train(self):
+    def train(self, writer):
         _, best_mre, best_acc, _, _, best_f1 = self.validate()
         self._save_state_dict()
         if self.pretrain:
             for epoch in range(self.pretrain_num_epochs):
-                self.pretrain_one_epoch(epoch+1)
+                self.pretrain_one_epoch(epoch+1, writer)
 
         self.model.pretrain = False
         for epoch in range(self.num_epochs):
@@ -109,7 +109,7 @@ class Trainer:
                 self.best_model_epoch = epoch
                 self._save_state_dict()
     
-    def pretrain_one_epoch(self,epoch):
+    def pretrain_one_epoch(self, epoch, writer):
         loss_values = []
         self.model.train()
         tqdm_dataloader = tqdm(self.pretrain_loader)
@@ -141,10 +141,14 @@ class Trainer:
             self.training_loss.append(average_loss)
             tqdm_dataloader.set_description('Epoch {}, loss {:.2f}'.format(epoch, average_loss))
 
+            writer.add_scalar("pretrain/batch/avg_loss", average_loss, epoch)
+            writer.flush()
+
+
         if self.args.enable_lr_schedule:
             self.lr_scheduler.step()
     
-    def train_one_epoch(self,epoch):
+    def train_one_epoch(self, epoch, writer):
         loss_values = []
         self.model.train()
         tqdm_dataloader = tqdm(self.train_loader)
@@ -162,6 +166,10 @@ class Trainer:
             average_loss = np.mean(np.array(loss_values))
             self.training_loss.append(average_loss)
             tqdm_dataloader.set_description('Epoch {}, loss {:.2f}'.format(epoch, average_loss))
+
+            writer.add_scalar("train/batch/avg_loss", average_loss, epoch)
+            writer.flush()
+
 
         if self.args.enable_lr_schedule:
             self.lr_scheduler.step()
