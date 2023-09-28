@@ -98,7 +98,7 @@ class Trainer:
 
         self.model.pretrain = False
         for epoch in range(self.num_epochs):
-            self.train_one_epoch(epoch+1)
+            self.train_one_epoch(epoch+1, writer)
             mae, mre, acc, precision, recall, f1 = self.validate()
             self.update_metrics_dict(mae, mre, acc, precision, recall, f1, mode = 'train')
 
