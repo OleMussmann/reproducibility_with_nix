@@ -1,1 +1,0 @@
-Aggregate,Toaster,Fridge-Freezer,Freezer,Dryer,Dishwasher,Washing_Machine,TV,Microwave,Kettle,Issues
