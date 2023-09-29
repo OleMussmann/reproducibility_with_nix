@@ -10,10 +10,7 @@
     in {
       devShells.default = pkgs.mkShell rec {
         packages = with pkgs; [
-          py.ipywidgets
-          py.jupyterlab
           py.pandas
-          py.plotly
           py.pytorch
           py.scikit-learn
           py.tensorboard

@@ -14,7 +14,6 @@ from Trainer import *
 from time import time
 from pathlib import Path
 import pickle as pkl
-import plotly.express as px
 
 
 with open("./results_UK-DALE_TitanV_kettle/uk_dale/kettle/results.pkl", "rb") as f:
