@@ -136,3 +136,6 @@ Data/.DS_Store
 
 # Data
 data/
+
+# Outputs
+result
